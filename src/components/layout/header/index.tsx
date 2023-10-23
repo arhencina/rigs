@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Flex, HStack, useColorModeValue } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -13,7 +14,11 @@ export default function Header() {
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
-            ></HStack>
+            >
+              <Link href={"#"}>Home</Link>
+              <Link href={"#"}>Contact Us</Link>
+              <Link href={"#"}>About Us</Link>
+            </HStack>
           </HStack>
         </Flex>
       </Box>

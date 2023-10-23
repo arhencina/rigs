@@ -1,54 +1,61 @@
 "use client";
 
-import Header from "@/components/layout/header";
-import ProductSimple from "@/components/product";
-import { AddIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Flex,
-  Icon,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-} from "@chakra-ui/react";
-import React from "react";
+import ProductCard from "@/components/product";
+import api from "@/services/api";
+import { Box, Flex, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
+import { ApiResponse } from "apisauce";
+import React, { useState } from "react";
 
 const Homepage = () => {
+  const fetchProducts = async (): Promise<IProduct[]> => {
+    try {
+      const { data } = await api.get<IProduct[]>("/products");
+      if (data) {
+        return data;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return [
+      {
+        id: 0,
+        name: "error",
+        image: "",
+        price: "",
+        type: "processor",
+        description: "",
+      },
+    ];
+  };
+  const { isLoading, error, data } = useQuery<IProduct[]>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+
   return (
-    <Flex flexDirection={"column"} h={"100vh"} w={"100vw"}>
-      <Header />
-      <ProductSimple />
-      <Flex
-        alignItems={"flex-end"}
-        justifyContent={"flex-end"}
-        h={"100%"}
-        w={"100%"}
-        p={10}
-      >
-        <Popover>
-          <PopoverTrigger>
-            <Button
-              colorScheme="teal"
-              borderRadius={"50%"}
-              height={"60px"}
-              width={"60px"}
-            >
-              <AddIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Chat Bot</PopoverHeader>
-            <PopoverBody>Hey! What would you like me to do?</PopoverBody>
-          </PopoverContent>
-        </Popover>
-      </Flex>
-    </Flex>
+    <SimpleGrid columns={5} spacing={10} h={"100%"} w={"100%"}>
+      {isLoading && (
+        <Flex
+          h={"100vh"}
+          w={"100vw"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Spinner size={"lg"} />
+        </Flex>
+      )}
+      {!isLoading &&
+        data &&
+        data.map((product) => (
+          <ProductCard
+            key={product.id}
+            productName={product.name}
+            productPrice={Number(product.price).toFixed(2)}
+          />
+        ))}
+      {error && <Heading>Failed fetching data.</Heading>}
+    </SimpleGrid>
   );
 };
 

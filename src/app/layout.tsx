@@ -1,13 +1,6 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+"use client";
 import { Providers } from "./providers";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Rigsmith",
-  description: "WEB BASED QUOTATION MANAGEMENT SYSTEM",
-};
+import PageLayout from "@/components/layout";
 
 export default function RootLayout({
   children,
@@ -15,9 +8,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html>
       <Providers>
-        <body className={inter.className}>{children}</body>
+        <body style={{ overflowX: "hidden" }}>
+          <PageLayout>{children}</PageLayout>
+        </body>
       </Providers>
     </html>
   );
