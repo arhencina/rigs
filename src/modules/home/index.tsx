@@ -2,13 +2,13 @@
 
 import ProductCard from "@/components/product";
 import api from "@/services/api";
-import { Box, Flex, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
-import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import { ApiResponse } from "apisauce";
-import React, { useState } from "react";
+import { Flex, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import * as Icons from "@chakra-ui/icons";
+import React from "react";
 
 const Homepage = () => {
-  const fetchProducts = async (): Promise<IProduct[]> => {
+  const fetchProducts = async (): Promise<IProduct[] | undefined> => {
     try {
       const { data } = await api.get<IProduct[]>("/products");
       if (data) {
@@ -17,18 +17,8 @@ const Homepage = () => {
     } catch (e) {
       console.error(e);
     }
-    return [
-      {
-        id: 0,
-        name: "error",
-        image: "",
-        price: "",
-        type: "processor",
-        description: "",
-      },
-    ];
   };
-  const { isLoading, error, data } = useQuery<IProduct[]>({
+  const { isLoading, error, data } = useQuery<IProduct[] | undefined>({
     queryKey: ["products"],
     queryFn: fetchProducts,
   });
@@ -45,16 +35,26 @@ const Homepage = () => {
           <Spinner size={"lg"} />
         </Flex>
       )}
-      {!isLoading &&
-        data &&
-        data.map((product) => (
+      {error && (
+        <Flex
+          h={"100vh"}
+          w={"100vw"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={10}
+        >
+          <Icons.WarningTwoIcon boxSize={10} />
+          <Heading>No products found.</Heading>
+        </Flex>
+      )}
+      {!error &&
+        data?.map((product) => (
           <ProductCard
             key={product.id}
             productName={product.name}
             productPrice={Number(product.price).toFixed(2)}
           />
         ))}
-      {error && <Heading>Failed fetching data.</Heading>}
     </SimpleGrid>
   );
 };
