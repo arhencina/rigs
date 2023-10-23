@@ -7,6 +7,8 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
+  FormHelperText,
   Input,
   InputGroup,
   Popover,
@@ -19,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { ChangeEvent, useState } from "react";
+import { isError } from "util";
 
 interface ISendInquiry {
   question: string;
@@ -102,9 +105,15 @@ const Chat = () => {
 
   const InputToolbar = () => {
     const [question, setQuestion] = useState<string>("");
+
+    const isError =
+      question === "" || question === undefined || question === null;
     return (
       <Flex alignItems={"flex-end"} gap={5}>
-        <FormControl id="question">
+        <FormControl id="question" isInvalid={isError}>
+          {isError && (
+            <FormErrorMessage>Please type your inquiry first.</FormErrorMessage>
+          )}
           <InputGroup borderColor="#E0E1E7">
             <Input
               type="text"
@@ -119,8 +128,10 @@ const Chat = () => {
         <Button
           colorScheme="teal"
           onClick={() => {
-            setMessages([...messages, { message: question, user: "user" }]);
-            mutation.mutate({ question: question });
+            if (!isError) {
+              setMessages([...messages, { message: question, user: "user" }]);
+              mutation.mutate({ question: question });
+            }
           }}
         >
           <Icons.ArrowForwardIcon />
@@ -145,13 +156,14 @@ const Chat = () => {
         <PopoverContent w={"500px"}>
           <PopoverCloseButton />
           <PopoverHeader>Rigsmith Helper</PopoverHeader>
-          <PopoverBody h={"700px"}>
+          <PopoverBody h={"500px"}>
             <Flex
               h={"100%"}
               w={"100%"}
               justifyContent={"flex-end"}
               direction={"column"}
               gap={"30px"}
+              overscrollX={"none"}
             >
               <Flex
                 direction={"column"}
