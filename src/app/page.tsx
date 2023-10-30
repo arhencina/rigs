@@ -1,3 +1,5 @@
+"use client";
+
 import Homepage from "@/modules/home";
 
 export default function App() {

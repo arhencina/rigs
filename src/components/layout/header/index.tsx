@@ -16,8 +16,8 @@ export default function Header() {
               display={{ base: "none", md: "flex" }}
             >
               <Link href={"#"}>Home</Link>
-              <Link href={"#"}>Contact Us</Link>
-              <Link href={"#"}>About Us</Link>
+              {/* <Link href={"#"}>Contact Us</Link>
+              <Link href={"#"}>About Us</Link> */}
             </HStack>
           </HStack>
         </Flex>

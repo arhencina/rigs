@@ -12,7 +12,7 @@ export default function RootLayout({
   });
 
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning={true}>
       <Providers>
         <body style={{ overflowX: "hidden" }}>
           <NoSSRLayout>{children}</NoSSRLayout>

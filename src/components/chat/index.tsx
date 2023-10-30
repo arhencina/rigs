@@ -1,5 +1,6 @@
 "use client";
 
+import useQuotation from "@/hooks/useQuotation";
 import api from "@/services/api";
 import * as Icons from "@chakra-ui/icons";
 import {
@@ -8,7 +9,6 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   Input,
   InputGroup,
   Popover,
@@ -19,29 +19,32 @@ import {
   PopoverTrigger,
   Text,
 } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useMutation } from "@tanstack/react-query";
 import { ChangeEvent, useState } from "react";
-import { isError } from "util";
+import Link from "next/link";
 
 interface ISendInquiry {
   question: string;
 }
 
 const Chat = () => {
-  const [messages, setMessages] = useState<{ message: string; user: string }[]>(
-    [
-      {
-        message: "Hi! What can I do for you?",
-        user: "bot",
-      },
-    ]
-  );
+  const [messages, setMessages] = useState<
+    { message: React.ReactNode; user: string }[]
+  >([
+    {
+      message: "Hi! What can I do for you?",
+      user: "bot",
+    },
+  ]);
+  const setQuotation = useQuotation((state) => state.setQuotation);
+  const origin = window.location.origin;
 
   const mutation = useMutation({
     mutationFn: ({ question }: ISendInquiry) => {
       return api.post<IProduct[]>(`/chat?q=${question}`);
     },
-    onError: () => {
+    onError: (e) => {
       setMessages([
         ...messages,
         { message: "Sorry can you repeat your inquiry?", user: "bot" },
@@ -49,14 +52,26 @@ const Chat = () => {
     },
     onSuccess: (data) => {
       if (data.data && data.data.length > 0) {
+        setQuotation(data.data);
         setMessages([
           ...messages,
           {
-            message: `Nice! I've found the right thing for you! Here it is!
-            ${data.data.map(
-              (product) =>
-                `${product.name} - PHP${Number(product.price).toFixed(2)}`
-            )}`,
+            message: (
+              <>
+                <Text>
+                  {`Nice! I've found the right thing for you! Here it is!`}
+                </Text>
+                <Flex alignItems={"center"}>
+                  <Link href={`${origin}/quotation`}>
+                    <>
+                      {/* <a target="_blank"> */}
+                      {`${origin}/quotation`} <ExternalLinkIcon mx="2px" />
+                      {/* </a> */}
+                    </>
+                  </Link>
+                </Flex>
+              </>
+            ),
             user: "bot",
           },
         ]);
@@ -83,7 +98,7 @@ const Chat = () => {
             backgroundColor="#E0E1E7"
             borderRadius={"25px"}
           >
-            <Text>{message.message}</Text>
+            <>{message.message}</>
           </Box>
         );
       } else {
@@ -96,7 +111,7 @@ const Chat = () => {
             backgroundColor={"teal"}
             borderRadius={"25px"}
           >
-            <Text>{message.message}</Text>
+            <>{message.message}</>
           </Box>
         );
       }
@@ -127,6 +142,7 @@ const Chat = () => {
         </FormControl>
         <Button
           colorScheme="teal"
+          disabled={isError}
           onClick={() => {
             if (!isError) {
               setMessages([...messages, { message: question, user: "user" }]);
@@ -171,6 +187,7 @@ const Chat = () => {
                 w={"100%"}
                 gap={5}
                 overflow={"scroll"}
+                overflowX={"hidden"}
               >
                 <Conversation />
               </Flex>

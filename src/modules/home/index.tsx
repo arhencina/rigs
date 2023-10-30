@@ -24,7 +24,7 @@ const Homepage = () => {
   });
 
   return (
-    <SimpleGrid columns={5} spacing={10} h={"100%"} w={"100%"}>
+    <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
       {isLoading && (
         <Flex
           h={"100vh"}
@@ -52,7 +52,9 @@ const Homepage = () => {
           <ProductCard
             key={product.id}
             productName={product.name}
-            productPrice={Number(product.price).toFixed(2)}
+            productPrice={`PHP${Number(product.price).toFixed(2)}`}
+            productDescription={product.description}
+            productImage={product.image}
           />
         ))}
     </SimpleGrid>

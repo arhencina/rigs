@@ -9,23 +9,31 @@ import {
   Stack,
   Image,
 } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
 
 interface IProductCardProps {
   productName: string;
   productPrice: string;
+  productImage: string;
+  productDescription?: string;
 }
 
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
-
-const ProductCard = ({ productName, productPrice }: IProductCardProps) => {
+const ProductCard = ({
+  productName,
+  productPrice,
+  productImage,
+  productDescription,
+}: IProductCardProps) => {
+  const img = `${productImage}`;
   return (
     <Center py={12}>
       <Box
         role={"group"}
         p={6}
         maxW={"330px"}
-        minH={"500px"}
+        minH={"400px"}
         w={"full"}
         bg={useColorModeValue("white", "gray.800")}
         boxShadow={"2xl"}
@@ -46,7 +54,7 @@ const ProductCard = ({ productName, productPrice }: IProductCardProps) => {
             pos: "absolute",
             top: 5,
             left: 0,
-            backgroundImage: `url(${IMAGE})`,
+            backgroundImage: `url(${productImage ? img : IMAGE})`,
             filter: "blur(15px)",
             zIndex: -1,
           }}
@@ -61,11 +69,11 @@ const ProductCard = ({ productName, productPrice }: IProductCardProps) => {
             height={230}
             width={282}
             objectFit={"cover"}
-            src={IMAGE}
-            alt="#"
+            src={productImage ? img : IMAGE}
+            alt={"product image"}
           />
         </Box>
-        <Stack pt={10} align={"center"}>
+        <Stack pt={10} align={"center"} justify={"center"}>
           <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
             {productName}
           </Heading>
