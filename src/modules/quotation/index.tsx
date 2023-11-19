@@ -20,6 +20,8 @@ import {
 import React, { useRef, useState } from "react";
 import useQuotation from "@/hooks/useQuotation";
 import { useReactToPrint } from "react-to-print";
+import { useMutation } from "@tanstack/react-query";
+import api from "@/services/api";
 
 const Quotation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,6 +46,14 @@ const Quotation = () => {
   const onClickRemove = (product: IProduct) => {
     setDraftQuote((prev) => prev.filter((prod) => prod.id !== product.id));
   };
+
+  const mutation = useMutation({
+    mutationFn: (products: IProduct[]) => {
+      return api.post(`/saveQuote`, {
+        products: products.map((product) => ({ id: product.id })),
+      });
+    },
+  });
   return (
     <Box h={"100%"} w={"100%"} p={10}>
       <Flex gap={10} alignItems={"center"}>
@@ -243,7 +253,13 @@ const Quotation = () => {
 
             <ModalFooter justifyContent={"space-between"}>
               {draftQuote.length > 0 && (
-                <Button colorScheme="blue" onClick={handlePrint}>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => {
+                    mutation.mutate(draftQuote);
+                    handlePrint();
+                  }}
+                >
                   Print Quotation
                 </Button>
               )}

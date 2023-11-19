@@ -15,7 +15,7 @@ export default function Header() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              <Link href={"#"}>Home</Link>
+              <Link href={"/"}>Home</Link>
               {/* <Link href={"#"}>Contact Us</Link>
               <Link href={"#"}>About Us</Link> */}
             </HStack>
