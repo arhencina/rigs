@@ -15,3 +15,5 @@ declare type TProductType =
   | "powerSupply"
   | "case"
   | "monitor";
+
+declare module "react-speech-recognition";

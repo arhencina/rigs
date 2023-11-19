@@ -18,11 +18,16 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useMutation } from "@tanstack/react-query";
 import { ChangeEvent, useState } from "react";
 import Link from "next/link";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { FaMicrophone } from "react-icons/fa";
 
 interface ISendInquiry {
   question: string;
@@ -120,11 +125,29 @@ const Chat = () => {
 
   const InputToolbar = () => {
     const [question, setQuestion] = useState<string>("");
+    const { transcript, resetTranscript } = useSpeechRecognition();
+    const startListening = () => {
+      SpeechRecognition.startListening({ continuous: true });
+    };
+    const stopListeningAndRecordTranscript = () => {
+      SpeechRecognition.stopListening();
+      setQuestion(transcript);
+    };
 
     const isError =
       question === "" || question === undefined || question === null;
     return (
       <Flex alignItems={"flex-end"} gap={5}>
+        <Button
+          colorScheme="teal"
+          disabled={isError}
+          onMouseDown={startListening}
+          onTouchStart={startListening}
+          onTouchEnd={stopListeningAndRecordTranscript}
+          onMouseUp={stopListeningAndRecordTranscript}
+        >
+          <Icon as={FaMicrophone} />
+        </Button>
         <FormControl id="question" isInvalid={isError}>
           {isError && (
             <FormErrorMessage>Please type your inquiry first.</FormErrorMessage>
@@ -133,7 +156,13 @@ const Chat = () => {
             <Input
               type="text"
               size="md"
-              placeholder="Message"
+              placeholder={
+                transcript !== "" ||
+                transcript !== undefined ||
+                transcript !== null
+                  ? transcript
+                  : "Message"
+              }
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setQuestion(e.target.value)
               }
@@ -147,6 +176,7 @@ const Chat = () => {
             if (!isError) {
               setMessages([...messages, { message: question, user: "user" }]);
               mutation.mutate({ question: question });
+              resetTranscript();
             }
           }}
         >

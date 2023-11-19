@@ -242,9 +242,11 @@ const Quotation = () => {
             </ModalBody>
 
             <ModalFooter justifyContent={"space-between"}>
-              <Button colorScheme="blue" onClick={handlePrint}>
-                Print Quotation
-              </Button>
+              {draftQuote.length > 0 && (
+                <Button colorScheme="blue" onClick={handlePrint}>
+                  Print Quotation
+                </Button>
+              )}
               <Heading size="md">
                 Total: PHP{" "}
                 {draftQuote.length > 0
