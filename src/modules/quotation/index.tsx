@@ -83,6 +83,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -103,6 +105,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -123,6 +127,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -143,6 +149,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -163,6 +171,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -183,6 +193,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote
@@ -203,6 +215,8 @@ const Quotation = () => {
                   productPrice={`PHP${Number(product.price).toFixed(2)}`}
                   productDescription={product.description}
                   productImage={product.image}
+                  label={product.label || undefined}
+                  trusted={product.trusted || undefined}
                 />
                 <Button onClick={() => onClickAddToQuote(product)}>
                   Add to Quote

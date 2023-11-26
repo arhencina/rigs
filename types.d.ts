@@ -4,6 +4,8 @@ declare interface IProduct {
   price: string;
   image: string;
   description: string;
+  label?: string;
+  trusted?: boolean;
   type: TProductType;
 }
 

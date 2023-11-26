@@ -8,14 +8,19 @@ import {
   Text,
   Stack,
   Image,
+  Tooltip,
+  Icon,
 } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
+import { VscWorkspaceTrusted } from "react-icons/vsc";
+import { FaHotjar } from "react-icons/fa";
 
 interface IProductCardProps {
   productName: string;
   productPrice: string;
   productImage: string;
   productDescription?: string;
+  label?: string;
+  trusted?: boolean;
 }
 
 const IMAGE =
@@ -24,7 +29,8 @@ const ProductCard = ({
   productName,
   productPrice,
   productImage,
-  productDescription,
+  label,
+  trusted,
 }: IProductCardProps) => {
   const img = `${productImage}`;
   return (
@@ -81,6 +87,26 @@ const ProductCard = ({
             <Text fontWeight={800} fontSize={"xl"}>
               {productPrice}
             </Text>
+          </Stack>
+          <Stack direction={"row"} align={"center"}>
+            {label && label === "hot" ? (
+              <Tooltip label="Hot right now!">
+                <Box>
+                  <Icon as={FaHotjar} fontSize={"24px"} color={"orange.500"} />
+                </Box>
+              </Tooltip>
+            ) : null}
+            {trusted && trusted === true ? (
+              <Tooltip label="Trusted brand!">
+                <Box>
+                  <Icon
+                    as={VscWorkspaceTrusted}
+                    fontSize={"24px"}
+                    color={"green"}
+                  />
+                </Box>
+              </Tooltip>
+            ) : null}
           </Stack>
         </Stack>
       </Box>
