@@ -200,8 +200,14 @@ const Chat = () => {
           </Button>
         </PopoverTrigger>
         <PopoverContent w={"500px"}>
-          <PopoverCloseButton />
-          <PopoverHeader>Rigsmith Helper</PopoverHeader>
+          <PopoverCloseButton
+            color={"white"}
+            alignSelf={"center"}
+            justifySelf={"center"}
+          />
+          <PopoverHeader bg={"teal"} color="white">
+            Rigsmith Helper
+          </PopoverHeader>
           <PopoverBody h={"500px"}>
             <Flex
               h={"100%"}

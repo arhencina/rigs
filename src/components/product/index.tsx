@@ -23,8 +23,7 @@ interface IProductCardProps {
   trusted?: boolean;
 }
 
-const IMAGE =
-  "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
+const IMAGE = "no-image.png";
 const ProductCard = ({
   productName,
   productPrice,
@@ -38,47 +37,28 @@ const ProductCard = ({
       <Box
         role={"group"}
         p={6}
-        maxW={"330px"}
-        minH={"400px"}
+        maxW={"400px"}
+        minH={"500px"}
+        maxH={"500px"}
         w={"full"}
         bg={useColorModeValue("white", "gray.800")}
         boxShadow={"2xl"}
         rounded={"lg"}
         pos={"relative"}
         zIndex={1}
+        alignItems={"center"}
+        justifyContent={"center"}
+        display={"flex"}
+        flexDirection={"column"}
       >
-        <Box
+        <Image
           rounded={"lg"}
-          mt={-12}
-          pos={"relative"}
-          height={"230px"}
-          _after={{
-            transition: "all .3s ease",
-            content: '""',
-            w: "full",
-            h: "full",
-            pos: "absolute",
-            top: 5,
-            left: 0,
-            backgroundImage: `url(${productImage ? img : IMAGE})`,
-            filter: "blur(15px)",
-            zIndex: -1,
-          }}
-          _groupHover={{
-            _after: {
-              filter: "blur(20px)",
-            },
-          }}
-        >
-          <Image
-            rounded={"lg"}
-            height={230}
-            width={282}
-            objectFit={"cover"}
-            src={productImage ? img : IMAGE}
-            alt={"product image"}
-          />
-        </Box>
+          height={230}
+          width={282}
+          objectFit={"contain"}
+          src={productImage ? img : IMAGE}
+          alt={"No Image Found"}
+        />
         <Stack pt={10} align={"center"} justify={"center"}>
           <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
             {productName}

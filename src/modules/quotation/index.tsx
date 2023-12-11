@@ -69,9 +69,11 @@ const Quotation = () => {
                 })
             : "0.00"}
         </Heading>
-        <Button onClick={onOpen}>Check Quotation</Button>
+        <Button onClick={onOpen} colorScheme="teal">
+          Check Quotation
+        </Button>
       </Flex>
-      <Box>
+      <Box mb={5}>
         <Heading>Processor</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -86,14 +88,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>Motherboard</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -108,14 +113,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>RAM</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -130,14 +138,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>Storage</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -152,14 +163,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>Power Supply</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -174,14 +188,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>Case</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -196,14 +213,17 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
             ))}
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box mb={5}>
         <Heading>Monitor</Heading>
         <SimpleGrid columns={5} spacing={5} h={"100%"} w={"100%"}>
           {quotation
@@ -218,7 +238,10 @@ const Quotation = () => {
                   label={product.label || undefined}
                   trusted={product.trusted || undefined}
                 />
-                <Button onClick={() => onClickAddToQuote(product)}>
+                <Button
+                  onClick={() => onClickAddToQuote(product)}
+                  colorScheme="teal"
+                >
                   Add to Quote
                 </Button>
               </Flex>
@@ -268,7 +291,7 @@ const Quotation = () => {
             <ModalFooter justifyContent={"space-between"}>
               {draftQuote.length > 0 && (
                 <Button
-                  colorScheme="blue"
+                  colorScheme="teal"
                   onClick={() => {
                     mutation.mutate(draftQuote);
                     handlePrint();
